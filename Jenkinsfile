@@ -1,8 +1,10 @@
 pipeline {
-  agent any 
-  tools {
-    maven 'Maven'
-  }
+  agent { 
+        node {
+            label 'docker-agent-alpine'
+            }
+      }
+
   stages {
     stage ('Initialize') {
       steps {

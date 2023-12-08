@@ -19,7 +19,13 @@ pipeline {
         sh 'cat trufflehog1'
       }
     }
-    
+    stage ('container-security') {
+      steps {
+        sh 'rm trufflehog1 || true'
+        sh 'docker run aquasec/trivy image gesellix/trufflehog > trufflehog1'
+        sh 'cat trufflehog1'
+      }
+    }
         stage('Build') {
             steps{
            sh 'mvn clean package'

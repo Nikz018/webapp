@@ -12,10 +12,18 @@ pipeline {
                 '''
             }
         }
-        stage ('Check-Git-Secrets') {
+       stage ('Check-Git-Secrets') {
+      steps {
+        sh 'rm trufflehog || true'
+        sh 'docker run gesellix/trufflehog --json https://github.com/cehkunal/webapp.git > trufflehog'
+        sh 'cat trufflehog'
+      }
+    }
+
+    stage ('container-security') {
       steps {
         sh 'rm trufflehog1 || true'
-        sh 'docker run zricethezav/gitleaks --json https://github.com/Nikz018/webapp.git > trufflehog1'
+        sh 'docker run aquasec/trivy image gesellix/trufflehog > trufflehog1'
         sh 'cat trufflehog1'
       }
     }

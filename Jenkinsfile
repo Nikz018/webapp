@@ -19,6 +19,13 @@ pipeline {
         sh 'cat trufflehog1'
       }
     }
+    stage ('container-security') {
+      steps {
+        sh 'rm output.txt || true'
+        sh 'docker run aquasec/trivy image zricethezav/gitleaks > output.txt'
+        sh 'cat output.txt'
+      }
+    }
         stage('Build') {
             steps{
            sh 'mvn clean package'

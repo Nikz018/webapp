@@ -22,9 +22,9 @@ pipeline {
 
     stage ('container-security') {
       steps {
-        sh 'rm trufflehog1 || true'
-        sh 'docker run aquasec/trivy image gesellix/trufflehog > trufflehog1'
-        sh 'cat trufflehog1'
+        sh 'rm output.txt || true'
+        sh 'docker run aquasec/trivy image zricethezav/gitleaks > output.txt'
+        sh 'cat output.txt'
       }
     }
     
